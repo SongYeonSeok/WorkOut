@@ -16,6 +16,12 @@ namespace WorkOut
 {
     public partial class form1 : Form
     {
+        /// <summary>
+        /// 클릭 이벤트를 실행할 때, frmset, frminfo를 실행시키고 값을 받아와서
+        /// str에 값을 넣어준다.
+        /// </summary>
+        /// <param name="ExerType"></param>
+        /// <returns></returns>
         public string calculation(string ExerType)
         {
             string str = "";
@@ -91,7 +97,7 @@ namespace WorkOut
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public string RunSql(string sql)  // 모든 SQL 명령어를 처리  -  조회 결과를 문자열로 반환
+        public int RunSql(string sql)  // 모든 SQL 명령어를 처리
         {  // ex)  select * from          student where code < 4 / SELECT  /Select  / selEct
             sqlCmd.CommandText = sql;
 
@@ -102,39 +108,36 @@ namespace WorkOut
                 {
                     int n1 = sql.ToLower().IndexOf("from");
                     string s1 = sql.Substring(n1 + 4).Trim();    //student  where code < 4 
-                    string CurrentTable = s1.Split(ca)[0];
-                    //CurrentTable = sql.Substring(sql.ToLower().IndexOf("from") + 4).Trim().Split(ca)[0];
-                    //sbLabel2.Text = CurrentTable;
 
                     SqlDataReader sdr = sqlCmd.ExecuteReader();
 
-                    string sRet = sdr.GetName(0);
-                    for (int i = 1; i < sdr.FieldCount; i++)
+                    dbGrid.Rows.Clear();
+                    dbGrid.Columns.Clear();
+                    for (int i = 0; i < sdr.FieldCount; i++)
                     {
-                        sRet += $",{sdr.GetName(i)}";
+                        string s = sdr.GetName(i);
+                        dbGrid.Columns.Add(s, s);
                     }
-                    sRet += "\r\n";
-
                     for (int i = 0; sdr.Read(); i++)
                     {
-                        sRet += sdr.GetValue(0);
-                        for (int j = 1; j < sdr.FieldCount; j++)
+                        int rIdx = dbGrid.Rows.Add();
+                        for (int j = 0; j < sdr.FieldCount; j++)
                         {
-                            sRet += $",{sdr.GetValue(j)}";
+                            object obj = sdr.GetValue(j);
+                            dbGrid.Rows[rIdx].Cells[j].Value = obj;
                         }
-                        sRet += "\r\n";
                     }
                     sdr.Close();
-                    return sRet;
+                    return 0;
                 }
                 else
                 {
-                    return $"{sqlCmd.ExecuteNonQuery()}";
+                    return sqlCmd.ExecuteNonQuery();
                 }
             }
             catch (Exception e1)
             {
-                MessageBox.Show(e1.Message); return e1.Message;
+                MessageBox.Show(e1.Message); return -1;
             }
         }
 
@@ -157,10 +160,13 @@ namespace WorkOut
 
             // csv 파일 불러오기
             Encoding enc = Encoding.UTF8;
+            // StreamReader sr = new StreamReader(address, enc, true);     // 한번 다시 해 보기
+
             byte[] bArrOrg = File.ReadAllBytes(address);
             byte[] bArr = Encoding.Convert(enc, Encoding.Default, bArrOrg);     // Raw Data
             string str = Encoding.Default.GetString(bArr);  // All Text
             string[] sArr = str.Split('\n');
+
             string[] sa1 = sArr[0].Trim().Split(',');
             for (int i = 0; i < sa1.Length; i++) dbGrid.Columns.Add(sa1[i], sa1[i]);
             for(int k=1;k<sArr.Length;k++)
@@ -198,334 +204,93 @@ namespace WorkOut
         /// </summary>
         private void MnuSohp_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuSohp.Text);
-            }
-            catch
-            {
-                if(MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo)==DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuSohp.Text);
         }
         private void MnuSarere_Click(object sender, EventArgs e)
         {
-            try
-            { 
-                SetText = calculation(MnuSarere.Text);
-            }
-            catch
-            {
-                if(MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo)==DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuSarere.Text);
         }
         private void MnuRearDelt_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuRearDelt.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuRearDelt.Text);
         }
         private void MnuOhp_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuOhp.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuOhp.Text);
         }
         private void MnuSquat_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuSquat.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
-
+            SetText = calculation(MnuSquat.Text);
         }
         private void MnuLegExtention_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuLegExtention.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+
+            SetText = calculation(MnuLegExtention.Text);
+
         }
         private void MnuLegCurl_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuLegCurl.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuLegCurl.Text);
         }
         private void MnuDumbelCurl_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuDumbelCurl.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuDumbelCurl.Text);
         }
         private void MnuBarbelCurl_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuBarbelCurl.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuBarbelCurl.Text);
         }
         private void MnuBenchpress_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuBenchpress.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuBenchpress.Text);
         }
         private void MnuDumbelpress_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuDumbelpress.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuDumbelpress.Text);
         }
         private void MnuInclinebenchpress_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuInclinebenchpress.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuInclinebenchpress.Text);
         }
         private void MnuDips_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuDips.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuDips.Text);
         }
         private void MnuFly_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuFly.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuFly.Text);
         }
         private void MnuPullUp_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuPullUp.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuPullUp.Text);
         }
         private void MnuRatpulldown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuRatpulldown.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuRatpulldown.Text);
         }
         private void Mnudumbelrow_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(Mnudumbelrow.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(Mnudumbelrow.Text);
         }
         private void MnuRow_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuRow.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuRow.Text);
         }
         private void MnuDeadlift_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuDeadlift.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuDeadlift.Text);
         }
         private void MnuBarbelrow_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuBarbelrow.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuBarbelrow.Text);
         }
         private void MnuArmpulldown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuArmpulldown.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuArmpulldown.Text);
         }
         private void MnuCablepushdown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetText = calculation(MnuCablepushdown.Text);
-            }
-            catch
-            {
-                if (MessageBox.Show("운동종목을 재설정 하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.No)
-                {
-                    frmInfo f1 = new frmInfo();
-                    f1.ShowDialog();
-                }
-            }
+            SetText = calculation(MnuCablepushdown.Text);
         }
 
 
@@ -551,13 +316,30 @@ namespace WorkOut
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime dt1 = DateTimePicker1.Value;
-            string year = dt1.ToString("yyyy");
-            string month = dt1.ToString("MM");
-            string day = dt1.ToString("ss");
             string dateStr = dt1.ToString("yyyy.MM.dd");
 
-            string sql = $"SELECT TYPE, SETS, WEIGHT, REPS, Total Reps, Volume FROM workoutprogram WHERE DATE == '{year}.{month}.{day}'";
-            RunSql(sql);
+            Encoding ec = Encoding.UTF8;
+            StreamReader sr = new StreamReader(address, ec, true);
+
+            while(true)
+            {
+                string str = sr.ReadLine();     // 한줄 씩 읽어온다.
+                if (str == null) break;         // 읽을 것이 없다면 break
+                string[] sarr = str.Split(',');
+
+                for (int i=0;i<sarr.Length;i++)
+                {
+                    if(sarr[i] == dateStr)
+                    {
+                        int indx = dbGrid.Rows.Add();       
+                        for (int j=0;j<sarr.Length;j++)
+                        {
+                            dbGrid.Rows[indx].Cells[j].Value = sarr[j];
+                        }
+                    }
+                }
+            }
+            sr.Close();
 
 
 
