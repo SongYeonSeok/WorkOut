@@ -33,7 +33,6 @@
             this.btnoutput = new System.Windows.Forms.Button();
             this.TbBox1 = new System.Windows.Forms.TextBox();
             this.TbBox2 = new System.Windows.Forms.TextBox();
-            this.btninput = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbBoxDate = new System.Windows.Forms.TextBox();
             this.tbBoxDoW = new System.Windows.Forms.TextBox();
@@ -75,7 +74,6 @@
             this.TbBox1.Name = "TbBox1";
             this.TbBox1.Size = new System.Drawing.Size(93, 25);
             this.TbBox1.TabIndex = 7;
-            this.TbBox1.Visible = false;
             // 
             // TbBox2
             // 
@@ -83,17 +81,6 @@
             this.TbBox2.Name = "TbBox2";
             this.TbBox2.Size = new System.Drawing.Size(93, 25);
             this.TbBox2.TabIndex = 8;
-            this.TbBox2.Visible = false;
-            // 
-            // btninput
-            // 
-            this.btninput.Location = new System.Drawing.Point(46, 169);
-            this.btninput.Name = "btninput";
-            this.btninput.Size = new System.Drawing.Size(108, 30);
-            this.btninput.TabIndex = 9;
-            this.btninput.Text = "입력";
-            this.btninput.UseVisualStyleBackColor = true;
-            this.btninput.Click += new System.EventHandler(this.btninput_Click);
             // 
             // label1
             // 
@@ -106,6 +93,7 @@
             // 
             // tbBoxDate
             // 
+            this.tbBoxDate.Enabled = false;
             this.tbBoxDate.Location = new System.Drawing.Point(80, 10);
             this.tbBoxDate.Name = "tbBoxDate";
             this.tbBoxDate.Size = new System.Drawing.Size(123, 25);
@@ -113,12 +101,13 @@
             // 
             // tbBoxDoW
             // 
+            this.tbBoxDoW.Enabled = false;
             this.tbBoxDoW.Location = new System.Drawing.Point(220, 10);
             this.tbBoxDoW.Name = "tbBoxDoW";
             this.tbBoxDoW.Size = new System.Drawing.Size(67, 25);
             this.tbBoxDoW.TabIndex = 14;
             // 
-            // Form2
+            // frmInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,14 +115,14 @@
             this.Controls.Add(this.tbBoxDoW);
             this.Controls.Add(this.tbBoxDate);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btninput);
             this.Controls.Add(this.TbBox2);
             this.Controls.Add(this.TbBox1);
             this.Controls.Add(this.btnoutput);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Name = "Form2";
+            this.Name = "frmInfo";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.frmInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,7 +132,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnoutput;
-        private System.Windows.Forms.Button btninput;
         public System.Windows.Forms.TextBox TbBox1;
         public System.Windows.Forms.TextBox TbBox2;
         private System.Windows.Forms.Label label1;
