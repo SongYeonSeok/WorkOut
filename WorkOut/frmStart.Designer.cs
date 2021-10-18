@@ -40,8 +40,8 @@
             this.MnuLegExtention = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuLegCurl = new System.Windows.Forms.ToolStripMenuItem();
             this.bicepsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dumbelCurlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.barbelCurlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuDumbelCurl = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuBarbelCurl = new System.Windows.Forms.ToolStripMenuItem();
             this.chestBackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuBenchpress = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +75,8 @@
             this.chestBackToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(745, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(652, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -86,7 +87,7 @@
             this.legsToolStripMenuItem,
             this.bicepsToolStripMenuItem});
             this.shoToolStripMenuItem.Name = "shoToolStripMenuItem";
-            this.shoToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
+            this.shoToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.shoToolStripMenuItem.Text = "Shoulder/Legs";
             // 
             // shoulderToolStripMenuItem
@@ -97,34 +98,34 @@
             this.MnuRearDelt,
             this.MnuOhp});
             this.shoulderToolStripMenuItem.Name = "shoulderToolStripMenuItem";
-            this.shoulderToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.shoulderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.shoulderToolStripMenuItem.Text = "Shoulder";
             // 
             // MnuSohp
             // 
             this.MnuSohp.Name = "MnuSohp";
-            this.MnuSohp.Size = new System.Drawing.Size(155, 26);
+            this.MnuSohp.Size = new System.Drawing.Size(123, 22);
             this.MnuSohp.Text = "S_Ohp";
             this.MnuSohp.Click += new System.EventHandler(this.MnuSohp_Click);
             // 
             // MnuSarere
             // 
             this.MnuSarere.Name = "MnuSarere";
-            this.MnuSarere.Size = new System.Drawing.Size(155, 26);
+            this.MnuSarere.Size = new System.Drawing.Size(123, 22);
             this.MnuSarere.Text = "Sarere";
             this.MnuSarere.Click += new System.EventHandler(this.MnuSarere_Click);
             // 
             // MnuRearDelt
             // 
             this.MnuRearDelt.Name = "MnuRearDelt";
-            this.MnuRearDelt.Size = new System.Drawing.Size(155, 26);
+            this.MnuRearDelt.Size = new System.Drawing.Size(123, 22);
             this.MnuRearDelt.Text = "Rear Delt";
             this.MnuRearDelt.Click += new System.EventHandler(this.MnuRearDelt_Click);
             // 
             // MnuOhp
             // 
             this.MnuOhp.Name = "MnuOhp";
-            this.MnuOhp.Size = new System.Drawing.Size(155, 26);
+            this.MnuOhp.Size = new System.Drawing.Size(123, 22);
             this.MnuOhp.Text = "Ohp";
             this.MnuOhp.Click += new System.EventHandler(this.MnuOhp_Click);
             // 
@@ -135,53 +136,53 @@
             this.MnuLegExtention,
             this.MnuLegCurl});
             this.legsToolStripMenuItem.Name = "legsToolStripMenuItem";
-            this.legsToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.legsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.legsToolStripMenuItem.Text = "Legs";
             // 
             // MnuSquat
             // 
             this.MnuSquat.Name = "MnuSquat";
-            this.MnuSquat.Size = new System.Drawing.Size(185, 26);
+            this.MnuSquat.Size = new System.Drawing.Size(180, 22);
             this.MnuSquat.Text = "Squat";
             this.MnuSquat.Click += new System.EventHandler(this.MnuSquat_Click);
             // 
             // MnuLegExtention
             // 
             this.MnuLegExtention.Name = "MnuLegExtention";
-            this.MnuLegExtention.Size = new System.Drawing.Size(185, 26);
+            this.MnuLegExtention.Size = new System.Drawing.Size(180, 22);
             this.MnuLegExtention.Text = "Leg Extention";
             this.MnuLegExtention.Click += new System.EventHandler(this.MnuLegExtention_Click);
             // 
             // MnuLegCurl
             // 
             this.MnuLegCurl.Name = "MnuLegCurl";
-            this.MnuLegCurl.Size = new System.Drawing.Size(185, 26);
+            this.MnuLegCurl.Size = new System.Drawing.Size(180, 22);
             this.MnuLegCurl.Text = "Leg Curl";
             this.MnuLegCurl.Click += new System.EventHandler(this.MnuLegCurl_Click);
             // 
             // bicepsToolStripMenuItem
             // 
             this.bicepsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dumbelCurlToolStripMenuItem,
-            this.barbelCurlToolStripMenuItem});
+            this.MnuDumbelCurl,
+            this.MnuBarbelCurl});
             this.bicepsToolStripMenuItem.Name = "bicepsToolStripMenuItem";
-            this.bicepsToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.bicepsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bicepsToolStripMenuItem.Text = "Biceps";
             this.bicepsToolStripMenuItem.Click += new System.EventHandler(this.bicepsToolStripMenuItem_Click);
             // 
-            // dumbelCurlToolStripMenuItem
+            // MnuDumbelCurl
             // 
-            this.dumbelCurlToolStripMenuItem.Name = "dumbelCurlToolStripMenuItem";
-            this.dumbelCurlToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
-            this.dumbelCurlToolStripMenuItem.Text = "Dumbel Curl";
-            this.dumbelCurlToolStripMenuItem.Click += new System.EventHandler(this.dumbelCurlToolStripMenuItem_Click);
+            this.MnuDumbelCurl.Name = "MnuDumbelCurl";
+            this.MnuDumbelCurl.Size = new System.Drawing.Size(180, 22);
+            this.MnuDumbelCurl.Text = "Dumbel Curl";
+            this.MnuDumbelCurl.Click += new System.EventHandler(this.MnuDumbelCurl_Click);
             // 
-            // barbelCurlToolStripMenuItem
+            // MnuBarbelCurl
             // 
-            this.barbelCurlToolStripMenuItem.Name = "barbelCurlToolStripMenuItem";
-            this.barbelCurlToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
-            this.barbelCurlToolStripMenuItem.Text = "Barbel Curl";
-            this.barbelCurlToolStripMenuItem.Click += new System.EventHandler(this.barbelCurlToolStripMenuItem_Click);
+            this.MnuBarbelCurl.Name = "MnuBarbelCurl";
+            this.MnuBarbelCurl.Size = new System.Drawing.Size(180, 22);
+            this.MnuBarbelCurl.Text = "Barbel Curl";
+            this.MnuBarbelCurl.Click += new System.EventHandler(this.MnuBarbelCurl_Click);
             // 
             // chestBackToolStripMenuItem
             // 
@@ -190,7 +191,7 @@
             this.backToolStripMenuItem,
             this.tricepsToolStripMenuItem});
             this.chestBackToolStripMenuItem.Name = "chestBackToolStripMenuItem";
-            this.chestBackToolStripMenuItem.Size = new System.Drawing.Size(99, 24);
+            this.chestBackToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.chestBackToolStripMenuItem.Text = "Chest/Back";
             // 
             // chestToolStripMenuItem
@@ -202,37 +203,37 @@
             this.MnuDips,
             this.MnuFly});
             this.chestToolStripMenuItem.Name = "chestToolStripMenuItem";
-            this.chestToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.chestToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.chestToolStripMenuItem.Text = "Chest";
             // 
             // MnuBenchpress
             // 
             this.MnuBenchpress.Name = "MnuBenchpress";
-            this.MnuBenchpress.Size = new System.Drawing.Size(223, 26);
+            this.MnuBenchpress.Size = new System.Drawing.Size(177, 22);
             this.MnuBenchpress.Text = "Bench Press";
             // 
             // MnuDumbelpress
             // 
             this.MnuDumbelpress.Name = "MnuDumbelpress";
-            this.MnuDumbelpress.Size = new System.Drawing.Size(223, 26);
+            this.MnuDumbelpress.Size = new System.Drawing.Size(177, 22);
             this.MnuDumbelpress.Text = "Dumbel Press";
             // 
             // MnuInclinebenchpress
             // 
             this.MnuInclinebenchpress.Name = "MnuInclinebenchpress";
-            this.MnuInclinebenchpress.Size = new System.Drawing.Size(223, 26);
+            this.MnuInclinebenchpress.Size = new System.Drawing.Size(177, 22);
             this.MnuInclinebenchpress.Text = "Incline Bench Press";
             // 
             // MnuDips
             // 
             this.MnuDips.Name = "MnuDips";
-            this.MnuDips.Size = new System.Drawing.Size(223, 26);
+            this.MnuDips.Size = new System.Drawing.Size(177, 22);
             this.MnuDips.Text = "Dips";
             // 
             // MnuFly
             // 
             this.MnuFly.Name = "MnuFly";
-            this.MnuFly.Size = new System.Drawing.Size(223, 26);
+            this.MnuFly.Size = new System.Drawing.Size(177, 22);
             this.MnuFly.Text = "Fly";
             // 
             // backToolStripMenuItem
@@ -246,49 +247,49 @@
             this.MnuBarbelrow,
             this.MnuArmpulldown});
             this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-            this.backToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.backToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.backToolStripMenuItem.Text = "Back";
             // 
             // MnuPullUp
             // 
             this.MnuPullUp.Name = "MnuPullUp";
-            this.MnuPullUp.Size = new System.Drawing.Size(208, 26);
+            this.MnuPullUp.Size = new System.Drawing.Size(166, 22);
             this.MnuPullUp.Text = "Pull Up";
             // 
             // MnuRatpulldown
             // 
             this.MnuRatpulldown.Name = "MnuRatpulldown";
-            this.MnuRatpulldown.Size = new System.Drawing.Size(208, 26);
+            this.MnuRatpulldown.Size = new System.Drawing.Size(166, 22);
             this.MnuRatpulldown.Text = "Rat Pull Down";
             // 
             // Mnudumbelrow
             // 
             this.Mnudumbelrow.Name = "Mnudumbelrow";
-            this.Mnudumbelrow.Size = new System.Drawing.Size(208, 26);
+            this.Mnudumbelrow.Size = new System.Drawing.Size(166, 22);
             this.Mnudumbelrow.Text = "OA_Dumbel Row";
             // 
             // MnuRow
             // 
             this.MnuRow.Name = "MnuRow";
-            this.MnuRow.Size = new System.Drawing.Size(208, 26);
+            this.MnuRow.Size = new System.Drawing.Size(166, 22);
             this.MnuRow.Text = "Row";
             // 
             // MnuDeadlift
             // 
             this.MnuDeadlift.Name = "MnuDeadlift";
-            this.MnuDeadlift.Size = new System.Drawing.Size(208, 26);
+            this.MnuDeadlift.Size = new System.Drawing.Size(166, 22);
             this.MnuDeadlift.Text = "Deadlift";
             // 
             // MnuBarbelrow
             // 
             this.MnuBarbelrow.Name = "MnuBarbelrow";
-            this.MnuBarbelrow.Size = new System.Drawing.Size(208, 26);
+            this.MnuBarbelrow.Size = new System.Drawing.Size(166, 22);
             this.MnuBarbelrow.Text = "Barbel Row";
             // 
             // MnuArmpulldown
             // 
             this.MnuArmpulldown.Name = "MnuArmpulldown";
-            this.MnuArmpulldown.Size = new System.Drawing.Size(208, 26);
+            this.MnuArmpulldown.Size = new System.Drawing.Size(166, 22);
             this.MnuArmpulldown.Text = "Arm Pull Down";
             // 
             // tricepsToolStripMenuItem
@@ -296,28 +297,29 @@
             this.tricepsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuCablepushdown});
             this.tricepsToolStripMenuItem.Name = "tricepsToolStripMenuItem";
-            this.tricepsToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.tricepsToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.tricepsToolStripMenuItem.Text = "Triceps";
             // 
             // MnuCablepushdown
             // 
             this.MnuCablepushdown.Name = "MnuCablepushdown";
-            this.MnuCablepushdown.Size = new System.Drawing.Size(214, 26);
+            this.MnuCablepushdown.Size = new System.Drawing.Size(170, 22);
             this.MnuCablepushdown.Text = "Cable Push Down";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 28);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.textBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(745, 582);
-            this.splitContainer1.SplitterDistance = 266;
-            this.splitContainer1.SplitterWidth = 10;
+            this.splitContainer1.Size = new System.Drawing.Size(652, 464);
+            this.splitContainer1.SplitterDistance = 212;
+            this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 3;
             // 
             // textBox1
@@ -326,20 +328,22 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Location = new System.Drawing.Point(3, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(739, 260);
+            this.textBox1.Size = new System.Drawing.Size(647, 208);
             this.textBox1.TabIndex = 1;
             // 
             // form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 610);
+            this.ClientSize = new System.Drawing.Size(652, 488);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "form1";
             this.Text = "WorkOut";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.form1_FormClosing);
@@ -368,8 +372,8 @@
         private System.Windows.Forms.ToolStripMenuItem MnuLegExtention;
         private System.Windows.Forms.ToolStripMenuItem MnuLegCurl;
         private System.Windows.Forms.ToolStripMenuItem bicepsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dumbelCurlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem barbelCurlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MnuDumbelCurl;
+        private System.Windows.Forms.ToolStripMenuItem MnuBarbelCurl;
         private System.Windows.Forms.ToolStripMenuItem chestBackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MnuBenchpress;
