@@ -367,6 +367,7 @@
             this.dbGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.dbGrid.Location = new System.Drawing.Point(1, 1);
             this.dbGrid.Name = "dbGrid";
+            this.dbGrid.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -390,7 +391,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(649, 182);
+            this.textBox1.Size = new System.Drawing.Size(649, 178);
             this.textBox1.TabIndex = 1;
             // 
             // DateTimePicker1

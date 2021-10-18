@@ -44,9 +44,14 @@ namespace WorkOut
                     rep[i] = int.Parse(f2.TbBox2.Text);
                 }
 
+
                 for (int i = 0; i < set; i++)
                 {
-                    if (i == 0) textBox1.Text += $"DATE,DAY,TYPE,SETS,WEIGHT,REPS,Total Reps,Volume\r\n";
+                    if (i == 0)
+                    {
+                        if (textBox1.Text == "") textBox1.Text += $"DATE,DAY,TYPE,SETS,WEIGHT,REPS,Total Reps,Volume\r\n";
+
+                    }
 
                     volume[i] = rep[i] * weight[i];
                     for (int j = 0; j < i + 1; j++)
@@ -74,6 +79,65 @@ namespace WorkOut
                 return str;
             }
         }
+        
+        /// <summary>
+        /// ca : white space array
+        /// </summary>
+        char[] ca = { ' ', '\t', '\r', '\n' };  // white space array
+
+
+        /// <summary>
+        /// sql 실행문
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public string RunSql(string sql)  // 모든 SQL 명령어를 처리  -  조회 결과를 문자열로 반환
+        {  // ex)  select * from          student where code < 4 / SELECT  /Select  / selEct
+            sqlCmd.CommandText = sql;
+
+            try
+            {
+                string sCmd = sql.Trim().Substring(0, 6); //mylib.GetToken(0, sql.Trim(), ' ');
+                if (sCmd.ToLower() == "select")
+                {
+                    int n1 = sql.ToLower().IndexOf("from");
+                    string s1 = sql.Substring(n1 + 4).Trim();    //student  where code < 4 
+                    string CurrentTable = s1.Split(ca)[0];
+                    //CurrentTable = sql.Substring(sql.ToLower().IndexOf("from") + 4).Trim().Split(ca)[0];
+                    //sbLabel2.Text = CurrentTable;
+
+                    SqlDataReader sdr = sqlCmd.ExecuteReader();
+
+                    string sRet = sdr.GetName(0);
+                    for (int i = 1; i < sdr.FieldCount; i++)
+                    {
+                        sRet += $",{sdr.GetName(i)}";
+                    }
+                    sRet += "\r\n";
+
+                    for (int i = 0; sdr.Read(); i++)
+                    {
+                        sRet += sdr.GetValue(0);
+                        for (int j = 1; j < sdr.FieldCount; j++)
+                        {
+                            sRet += $",{sdr.GetValue(j)}";
+                        }
+                        sRet += "\r\n";
+                    }
+                    sdr.Close();
+                    return sRet;
+                }
+                else
+                {
+                    return $"{sqlCmd.ExecuteNonQuery()}";
+                }
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1.Message); return e1.Message;
+            }
+        }
+
 
 
         public form1()
@@ -92,8 +156,19 @@ namespace WorkOut
             Location = new Point(x, y);
 
             // csv 파일 불러오기
-            Encoding enc;
-            if()
+            Encoding enc = Encoding.UTF8;
+            byte[] bArrOrg = File.ReadAllBytes(address);
+            byte[] bArr = Encoding.Convert(enc, Encoding.Default, bArrOrg);     // Raw Data
+            string str = Encoding.Default.GetString(bArr);  // All Text
+            string[] sArr = str.Split('\n');
+            string[] sa1 = sArr[0].Trim().Split(',');
+            for (int i = 0; i < sa1.Length; i++) dbGrid.Columns.Add(sa1[i], sa1[i]);
+            for(int k=1;k<sArr.Length;k++)
+            {
+                sa1 = sArr[k].Trim().Split(',');
+                dbGrid.Rows.Add(sa1);
+            }
+            
         }
 
 
@@ -112,6 +187,9 @@ namespace WorkOut
         string address = "C:\\Users\\KOSTA\\Desktop\\WorkOut1-master\\workoutprogram.csv";
 
         string SetText = "";
+
+        
+
         /// <summary>
         /// 운동 종류 // 변경한 부분 : try ~ catch
         /// // x를 클릭하면 운동족목을 재설정하시겠습니까?라는 문구와 함께 버튼 YES.NO
@@ -122,7 +200,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuSohp.Text);
+                SetText = calculation(MnuSohp.Text);
             }
             catch
             {
@@ -137,7 +215,7 @@ namespace WorkOut
         {
             try
             { 
-                SetText += calculation(MnuSarere.Text);
+                SetText = calculation(MnuSarere.Text);
             }
             catch
             {
@@ -152,7 +230,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuRearDelt.Text);
+                SetText = calculation(MnuRearDelt.Text);
             }
             catch
             {
@@ -167,7 +245,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuOhp.Text);
+                SetText = calculation(MnuOhp.Text);
             }
             catch
             {
@@ -182,7 +260,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuSquat.Text);
+                SetText = calculation(MnuSquat.Text);
             }
             catch
             {
@@ -198,7 +276,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuLegExtention.Text);
+                SetText = calculation(MnuLegExtention.Text);
             }
             catch
             {
@@ -213,7 +291,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuLegCurl.Text);
+                SetText = calculation(MnuLegCurl.Text);
             }
             catch
             {
@@ -228,7 +306,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuDumbelCurl.Text);
+                SetText = calculation(MnuDumbelCurl.Text);
             }
             catch
             {
@@ -243,7 +321,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuBarbelCurl.Text);
+                SetText = calculation(MnuBarbelCurl.Text);
             }
             catch
             {
@@ -258,7 +336,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuBenchpress.Text);
+                SetText = calculation(MnuBenchpress.Text);
             }
             catch
             {
@@ -273,7 +351,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuDumbelpress.Text);
+                SetText = calculation(MnuDumbelpress.Text);
             }
             catch
             {
@@ -288,7 +366,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuInclinebenchpress.Text);
+                SetText = calculation(MnuInclinebenchpress.Text);
             }
             catch
             {
@@ -303,7 +381,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuDips.Text);
+                SetText = calculation(MnuDips.Text);
             }
             catch
             {
@@ -318,7 +396,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuFly.Text);
+                SetText = calculation(MnuFly.Text);
             }
             catch
             {
@@ -333,7 +411,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuPullUp.Text);
+                SetText = calculation(MnuPullUp.Text);
             }
             catch
             {
@@ -348,7 +426,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuRatpulldown.Text);
+                SetText = calculation(MnuRatpulldown.Text);
             }
             catch
             {
@@ -363,7 +441,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(Mnudumbelrow.Text);
+                SetText = calculation(Mnudumbelrow.Text);
             }
             catch
             {
@@ -378,7 +456,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuRow.Text);
+                SetText = calculation(MnuRow.Text);
             }
             catch
             {
@@ -393,7 +471,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuDeadlift.Text);
+                SetText = calculation(MnuDeadlift.Text);
             }
             catch
             {
@@ -408,7 +486,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuBarbelrow.Text);
+                SetText = calculation(MnuBarbelrow.Text);
             }
             catch
             {
@@ -423,7 +501,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuArmpulldown.Text);
+                SetText = calculation(MnuArmpulldown.Text);
             }
             catch
             {
@@ -438,7 +516,7 @@ namespace WorkOut
         {
             try
             {
-                SetText += calculation(MnuCablepushdown.Text);
+                SetText = calculation(MnuCablepushdown.Text);
             }
             catch
             {
@@ -456,7 +534,6 @@ namespace WorkOut
         {
             //btnOk.DialogResult = DialogResult.OK;
         }
-
 
 
         private void bicepsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -479,8 +556,12 @@ namespace WorkOut
             string day = dt1.ToString("ss");
             string dateStr = dt1.ToString("yyyy.MM.dd");
 
-            
-            
+            string sql = $"SELECT TYPE, SETS, WEIGHT, REPS, Total Reps, Volume FROM workoutprogram WHERE DATE == '{year}.{month}.{day}'";
+            RunSql(sql);
+
+
+
+
         }
 
 

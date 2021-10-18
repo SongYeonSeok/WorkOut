@@ -1,29 +1,9 @@
-﻿date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,S_Ohp,1,3kg,1,1,3kg 
-2021.10.18,월요일,S_Ohp,2,3kg,1,2,6kg 
+﻿DATE,DAY,TYPE,SETS,WEIGHT,REPS,Total Reps,Volume
+2021.10.18,월요일,Sarere,1,3kg,2,2,6kg 
+2021.10.18,월요일,Sarere,2,3kg,2,4,12kg 
+2021.10.18,월요일,Sarere,3,3kg,2,6,18kg 
 
-date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,S_Ohp,1,3kg,1,1,3kg 
-2021.10.18,월요일,S_Ohp,2,3kg,1,2,6kg 
-
-date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,Rear Delt,1,20kg,5,5,100kg 
-2021.10.18,월요일,Rear Delt,2,20kg,5,10,200kg 
-2021.10.18,월요일,Rear Delt,3,20kg,5,15,300kg 
-
-date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,S_Ohp,1,3kg,1,1,3kg 
-2021.10.18,월요일,S_Ohp,2,3kg,1,2,6kg 
-
-date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,Rear Delt,1,20kg,5,5,100kg 
-2021.10.18,월요일,Rear Delt,2,20kg,5,10,200kg 
-2021.10.18,월요일,Rear Delt,3,20kg,5,15,300kg 
-
-date,day,type,WEIGHT,REPS,Total Reps,Volume
-2021.10.18,월요일,Dumbel Curl,1,3kg,5,5,15kg 
-2021.10.18,월요일,Dumbel Curl,2,3kg,5,10,30kg 
-2021.10.18,월요일,Dumbel Curl,3,3kg,5,15,45kg 
-2021.10.18,월요일,Dumbel Curl,4,3kg,5,20,60kg 
-2021.10.18,월요일,Dumbel Curl,5,3kg,5,25,75kg 
+2021.10.18,월요일,Leg Extention,1,5kg,3,3,15kg 
+2021.10.18,월요일,Leg Extention,2,5kg,3,6,30kg 
+2021.10.18,월요일,Leg Extention,3,5kg,3,9,45kg 
 
