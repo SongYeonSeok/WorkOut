@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Library;
 
 namespace WorkOut
 {
@@ -24,13 +24,14 @@ namespace WorkOut
             string name = tbBoxName.Text;
             string pw = tbBoxPW.Text;
 
-            library.SqlDB sqldb = new library.SqlDB(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\KOSTA\Desktop\WorkOut1-master\myDatabase.mdf;Integrated Security=True;Connect Timeout=30");
+            Library.SqlDB sqldb = new Library.SqlDB(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\KOSTA\Desktop\WorkOut1-master\myDatabase.mdf;Integrated Security=True;Connect Timeout=30");
             string ret = sqldb.GetString($"select name from WorkOutMem where name = '{name}'");
             string ret2 = sqldb.GetString($"select PW from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
             string type = sqldb.GetString($"select Type from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
             sqldb.Close();
 
             form1 f1 = new form1();
+            frmHeader f2 = new frmHeader();
             
 
             if (name==ret)
@@ -55,7 +56,6 @@ namespace WorkOut
                             case DialogResult.Cancel:
                                 Dispose();
                                 break;
-
                         }
 
                     }
@@ -64,10 +64,10 @@ namespace WorkOut
                         f1.Text = "Workout_Header";
                         MessageBox.Show($"환영합니다 {name}님");
                         this.Hide();        // 숨기기
-                        switch (f1.ShowDialog())
+                        switch (f2.ShowDialog())
                         {
                             case DialogResult.OK:
-                                f1.Close();
+                                f2.Close();
                                 break;
 
                             case DialogResult.Cancel:

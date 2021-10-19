@@ -11,23 +11,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using myLibrary;
+using Library;
 using static myLibrary.frminput;
+
 
 namespace WorkOut
 {
+    
     public partial class form1 : Form
     {
-       
-
         public form1()
         {
             InitializeComponent();
         }
-
         
         iniFile ini = new iniFile(".\\WorkOut.ini");
-
 
         private void form1_Load(object sender, EventArgs e)
         {
@@ -56,23 +54,60 @@ namespace WorkOut
                 dbGrid.Rows.Add(sa1);
             }
 
-            if(this.Text=="Workout_Header")
-            {
-                MnuClientIndex.Visible = true;
-            }
+            string[] name = new string[512];
 
-            InitServer();
+            int limit = 5;
+
+
+            // sql 연결
+            sqlConn.ConnectionString = ConnString;
+            sqlConn.Open();
+            sqlCmd.Connection = sqlConn;
+
+
+            for (int i = 0; i < limit; i++)
+            {
+                name[i] = GetString($"SELECT Name FROM WorkOutMem where Code = {i + 2}");
+            }
+            Mnu1.Text = name[0];
+            Mnu2.Text = name[1];
+            Mnu3.Text = name[2];
+            Mnu4.Text = name[3];
+            Mnu5.Text = name[4];
+
+            //InitServer();
+
+            // 글씨 속성
+
+
         }
 
-        
+
+        public string GetString(string sql)     // 단일 데이터 (1st record  1st field)
+        {       //select name from users where name = "Noname"
+
+            try
+            {
+                sqlCmd.CommandText = sql;
+                return sqlCmd.ExecuteScalar().ToString();
+
+            }
+
+            catch (Exception e1)
+            {
+                return e1.Message;
+            }
+        }
+
+
 
         SqlConnection sqlConn = new SqlConnection();    //Application Program과 DB를 연결시켜주는 도로 
         SqlCommand sqlCmd = new SqlCommand();           //그 도로를 타고 가는 자동차
         string ConnString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\KOSTA\Desktop\WorkOut1-master\myDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
+        
         string path = @"C:\Users\KOSTA\Desktop\WorkOut1-master\workoutprogram.csv";
         string address = @"C:\Users\KOSTA\Desktop\WorkOut1-master\workoutprogram.csv";
-
 
 
 
@@ -250,6 +285,7 @@ namespace WorkOut
             File.AppendAllText(address, SetText,Encoding.UTF8);
 
             MnuClientIndex.Visible = false;
+            MnuSend.Visible = false;
 
             CloseServer();
         }
@@ -266,7 +302,6 @@ namespace WorkOut
         {
 
         }
-
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dbGrid.Rows.Clear();
@@ -276,13 +311,6 @@ namespace WorkOut
 
             Encoding ec =  Encoding.UTF8 ;
             StreamReader sr = new StreamReader(address, ec, true);
-
-            //string str = "";
-            //string[] sarr = str.Split(',');
-            //for (int i = 0; i < sarr.Length; i++)
-            //{
-            //    dbGrid.Columns.Add(sarr[i], sarr[i]);
-            //}
 
             while (true)
             {
@@ -305,35 +333,12 @@ namespace WorkOut
                 }
             }
             sr.Close();
-            //if(str==null)
-            //{
-            //    Encoding enc;
-            //    enc = Encoding.UTF8;
-
-            //    byte[] barrOrg = File.ReadAllBytes(address);
-            //    byte[] barr = Encoding.Convert(enc, Encoding.Default, barrOrg);
-            //    str = Encoding.Default.GetString(barr);
-
-            //    sarr = str.Split('\n');                //줄 별로 array만듬
-            //    string[] sa1 = sarr[0].Trim().Split(',');       //줄 안에서 ,단위로 나눔
-
-            //    //for (int i = 0; i < sa1.Length; i++)
-            //    //{
-            //    //    dbGrid.Columns.Add(sa1[i], sa1[i]);
-            //    //}
-            //    for (int j = 1; j < sarr.Length; j++)
-            //    {
-            //        sa1 = sarr[j].Trim().Split(',');
-            //        dbGrid.Rows.Add(sa1);
-            //    }
-
-            //}
         }
 
         /// <summary>
         /// /////////////////////////////////////////////////////////////////////////////////////
         /// </summary>
-
+        /*
         class TcpEx
         {
             public TcpClient tp;
@@ -342,16 +347,23 @@ namespace WorkOut
             { tp = t; id = s; }
         };
         List<TcpEx> tcp = new List<TcpEx>();      //TcpClient type의 제네릭 List Object 선언
-
+        */
 
         Socket sock = null;
         TcpListener listen = null;
         Thread threadServer = null;
         Thread threadRead = null;
 
+        public string ConnectIP = "127.0.0.1";
+        public int ConnectPort = 9000;
+        public int serverPort = 9000;
+        int CP1 = 9001;
+        int CP2 = 9002;
+        int CP3 = 9003;
+        int CP4 = 9004;
+        int CP5 = 9005;
 
-
-
+        
         delegate void CB1(string s);
         void AddText(string str)
         {
@@ -362,32 +374,46 @@ namespace WorkOut
             }
             else
             {
-                tbChat.Text += str;
-
+                tbChat2.Text += str;
             }
         }
 
-        string ConnectIP = "127.0.0.1";
-        int ConnectPort = 9001;
-        int serverPort = 9001;
-
+        /*
         void InitServer()
         {
             if (listen != null) listen.Stop();
             listen = new TcpListener(serverPort);
             listen.Start();
 
-            if (threadRead != null) threadRead.Abort(); //thread가 돌아가고있었다면 thread 중지
+            if (threadRead != null) threadServer.Abort(); //thread가 돌아가고있었다면 thread 중지
+            threadServer = new Thread(ServerProcess);
+            threadServer.Start();
+
+            if (threadRead != null) threadRead.Abort();
             threadRead = new Thread(ReadProcess);
             threadRead.Start();
         }
-
+        */
         void CloseServer()
         {
             //timer1.Stop();
             if (listen != null) listen.Stop();          //기존에 수행되고있는 listener를 중지 
             if (threadServer != null) threadServer.Abort(); //thread가 돌아가고있었다면 thread 중지
             if (threadRead != null) threadRead.Abort(); //thread가 돌아가고있었다면 thread 중지
+            if (threadClient != null) threadClient.Abort();
+        }
+        /*
+        void ServerProcess()
+        {
+            byte[] buf = new byte[100];
+            while(true)
+            {
+                if(listen.Pending())
+                {
+                    TcpClient tp = listen.AcceptTcpClient();
+                }
+                Thread.Sleep(100);
+            }
         }
 
         void ReadProcess()
@@ -407,21 +433,132 @@ namespace WorkOut
                 }
                 Thread.Sleep(100);
             }
+        }*/
+        Thread threadClient = null;
+        private void Mnu1_Click(object sender, EventArgs e)
+        {
+
+            Mnu1.Checked = true;
+            Mnu2.Checked = false;
+            Mnu3.Checked = false;
+            Mnu4.Checked = false;
+            Mnu5.Checked = false;
+
+
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock.Connect(ConnectIP, CP1);
+            tbChat2.Text += "Connection with Header OK. \r\n";
+
+            threadClient = new Thread(ClientProcess);
+            threadClient.Start();
+
+        }
+
+        private void Mnu2_Click(object sender, EventArgs e)
+        {
+            Mnu1.Checked = false;
+            Mnu2.Checked = true;
+            Mnu3.Checked = false;
+            Mnu4.Checked = false;
+            Mnu5.Checked = false;
+
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock.Connect(ConnectIP, CP2);
+            tbChat2.Text += "Connection with Header OK. \r\n";
+
+            threadClient = new Thread(ClientProcess);
+            threadClient.Start();
+        }
+
+        private void Mnu3_Click(object sender, EventArgs e)
+        {
+            Mnu1.Checked = false;
+            Mnu2.Checked = false;
+            Mnu3.Checked = true;
+            Mnu4.Checked = false;
+            Mnu5.Checked = false;
+
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock.Connect(ConnectIP, CP3);
+            tbChat2.Text += "Connection with Header OK. \r\n";
+
+            threadClient = new Thread(ClientProcess);
+            threadClient.Start();
+        }
+
+        private void Mnu4_Click(object sender, EventArgs e)
+        {
+            Mnu1.Checked = false;
+            Mnu2.Checked = false;
+            Mnu3.Checked = false;
+            Mnu4.Checked = true;
+            Mnu5.Checked = false;
+
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock.Connect(ConnectIP, CP4);
+            tbChat2.Text += "Connection with Header OK. \r\n";
+
+            threadClient = new Thread(ClientProcess);
+            threadClient.Start();
+        }
+
+        private void Mnu5_Click(object sender, EventArgs e)
+        {
+            Mnu1.Checked = false;
+            Mnu2.Checked = false;
+            Mnu3.Checked = false;
+            Mnu4.Checked = false;
+            Mnu5.Checked = true;
+
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock.Connect(ConnectIP, CP5);
+            tbChat2.Text += "Connection with Header OK. \r\n";
+
+            threadClient = new Thread(ClientProcess);
+            threadClient.Start();
+        }
+
+        void ClientProcess()
+        {
+            byte[] buf = new byte[1024];
+            while(true)
+            {
+                if(sock.Available > 0)
+                {
+                    int n = sock.Receive(buf);
+                    AddText(Encoding.Default.GetString(buf, 0, n));
+                }
+                Thread.Sleep(100);
+            }
         }
 
         private void tbChat_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode==Keys.Enter)
             {
-                byte[] buf = new byte[100];
-                sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                sock.Connect(ConnectIP, serverPort);
-                string str = tbChat.Text;
-                sock.Send(Encoding.Default.GetBytes(str));
+                if (sock != null)
+                {
+                    string str;
+                    str = tbChat.Text;
+                    str += "\r\n";
+
+                    string str2 = str;
+                    if (Mnu1.Checked == true) str = "[수신 : SONG]" + str;
+                    if (Mnu2.Checked == true) str = "[수신 : KIM]" + str;
+                    if (Mnu3.Checked == true) str = "[수신 : LEE]" + str;
+                    if (Mnu4.Checked == true) str = "[수신 : PARK]" + str;
+                    if (Mnu5.Checked == true) str = "[수신 : NA]" + str;
+
+                    sock.Send(Encoding.Default.GetBytes(str));
+                    tbChat2.Text += "[송신 : 본인] " + str2;
+                    tbChat.Text = "";
+                }
             }
             
         }
 
+
+        //-------------------------------------------------------------------------------------
         private void dbGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -433,6 +570,16 @@ namespace WorkOut
         }
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void MnuClientIndex_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sendToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
