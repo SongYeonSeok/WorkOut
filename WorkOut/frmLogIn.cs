@@ -30,18 +30,36 @@ namespace WorkOut
 
             string ret = sqldb.GetString($"select name from WorkOutMem where name = '{name}'");
             string ret2 = sqldb.GetString($"select PW from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
+            string type = sqldb.GetString($"select Type from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
 
             form1 f1 = new form1();
-
+            frmHeader fh = new frmHeader();
+            
+            
             if (name==ret)
             {
-                if(pw==ret2)
+                if(type == "Header")
                 {
                     ///
-                    // 로그인 구현한 부분(추가 필요)
+                    // 로그인 할 때 로그인 후 로그인 창 사라지게 하기
                     ///
                     MessageBox.Show($"환영합니다 {name}님");
                     this.Hide();        // 숨기기
+                    switch(fh.ShowDialog())
+                    {
+                        case DialogResult.OK:
+                            fh.Close();
+                            break;
+
+                        case DialogResult.Cancel:
+                            Dispose();
+                            break;
+                    }
+                }
+                else if (type == "Client")
+                {
+                    MessageBox.Show($"환영합니다 {name}님");
+                    this.Hide();
                     switch(f1.ShowDialog())
                     {
                         case DialogResult.OK:
@@ -52,10 +70,9 @@ namespace WorkOut
                             Dispose();
                             break;
                     }
-
-                   
-                    
                 }
+
+
                 else if(pw!=ret2)
                 {
                     MessageBox.Show("잘못된 PW입니다.");

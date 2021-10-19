@@ -16,12 +16,63 @@ namespace WorkOut
 {
     public partial class form1 : Form
     {
+       
+
+        public form1()
+        {
+            InitializeComponent();
+        }
+
+        
+        iniFile ini = new iniFile(".\\WorkOut.ini");
+
+
+        private void form1_Load(object sender, EventArgs e)
+        {
+            int x = int.Parse(ini.GetString("Position", "LocationX", "0"));
+            int y = int.Parse(ini.GetString("Position", "LocationY", "0"));
+            Location = new Point(x, y);
+
+            //datagrid에 지금까지 운동했던 내용을 보여줌
+            Encoding enc;
+            enc = Encoding.UTF8;
+
+            byte[] barrOrg = File.ReadAllBytes(address);
+            byte[] barr = Encoding.Convert(enc, Encoding.Default, barrOrg);
+            string str = Encoding.Default.GetString(barr);
+
+            string[] sarr = str.Split('\n');                //줄 별로 array만듬
+            string[] sa1 = sarr[0].Trim().Split(',');       //줄 안에서 ,단위로 나눔
+
+            for (int i = 0; i < sa1.Length; i++)
+            {
+                dbGrid.Columns.Add(sa1[i], sa1[i]);
+            }
+            for (int j = 1; j < sarr.Length; j++)
+            {
+                sa1 = sarr[j].Trim().Split(',');
+                dbGrid.Rows.Add(sa1);
+            }
+        }
+
+        
+
+        SqlConnection sqlConn = new SqlConnection();    //Application Program과 DB를 연결시켜주는 도로 
+        SqlCommand sqlCmd = new SqlCommand();           //그 도로를 타고 가는 자동차
+        string ConnString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\조석훈\source\repos\C#\myDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+
+        string path = "C:\\Users\\조석훈\\source\\repos\\C#\\workoutprogram.csv";
+        string address = "C:\\Users\\조석훈\\source\\repos\\C#\\workoutprogram.csv" ;
+
+
+
+
         /// <summary>
-        /// 클릭 이벤트를 실행할 때, frmset, frminfo를 실행시키고 값을 받아와서
+        /// <calculation 함수>
+        /// 클릭 이벤트를 실행할 때 
+        /// frmset, frminfo를 실행시키고 값을 받아와서
         /// str에 값을 넣어준다.
         /// </summary>
-        /// <param name="ExerType"></param>
-        /// <returns></returns>
         public string calculation(string ExerType)
         {
             string str = "";
@@ -49,16 +100,17 @@ namespace WorkOut
                     weight[i] = int.Parse(f2.TbBox1.Text);
                     rep[i] = int.Parse(f2.TbBox2.Text);
                 }
-
-
+                
                 for (int i = 0; i < set; i++)
                 {
                     if (i == 0)
                     {
-                        if (textBox1.Text == "") textBox1.Text += $"DATE,DAY,TYPE,SETS,WEIGHT,REPS,Total Reps,Volume\r\n";
-
+                        if(textBox1.Text=="")
+                        {
+                            textBox1.Text += $"DATE,DAY,TYPE,SETS,WEIGHT,REPS,Total Reps,Volume\r\n";
+                        }
                     }
-
+                    
                     volume[i] = rep[i] * weight[i];
                     for (int j = 0; j < i + 1; j++)
                     {
@@ -69,7 +121,7 @@ namespace WorkOut
 
 
                 }
-                textBox1.Text += $"\r\n";
+                //textBox1.Text += $"\r\n";
 
                 str = textBox1.Text;
                 return str;
@@ -85,160 +137,51 @@ namespace WorkOut
                 return str;
             }
         }
-        
-        /// <summary>
-        /// ca : white space array
-        /// </summary>
-        char[] ca = { ' ', '\t', '\r', '\n' };  // white space array
 
-
-        /// <summary>
-        /// sql 실행문
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public int RunSql(string sql)  // 모든 SQL 명령어를 처리
-        {  // ex)  select * from          student where code < 4 / SELECT  /Select  / selEct
-            sqlCmd.CommandText = sql;
-
-            try
-            {
-                string sCmd = sql.Trim().Substring(0, 6); //mylib.GetToken(0, sql.Trim(), ' ');
-                if (sCmd.ToLower() == "select")
-                {
-                    int n1 = sql.ToLower().IndexOf("from");
-                    string s1 = sql.Substring(n1 + 4).Trim();    //student  where code < 4 
-
-                    SqlDataReader sdr = sqlCmd.ExecuteReader();
-
-                    dbGrid.Rows.Clear();
-                    dbGrid.Columns.Clear();
-                    for (int i = 0; i < sdr.FieldCount; i++)
-                    {
-                        string s = sdr.GetName(i);
-                        dbGrid.Columns.Add(s, s);
-                    }
-                    for (int i = 0; sdr.Read(); i++)
-                    {
-                        int rIdx = dbGrid.Rows.Add();
-                        for (int j = 0; j < sdr.FieldCount; j++)
-                        {
-                            object obj = sdr.GetValue(j);
-                            dbGrid.Rows[rIdx].Cells[j].Value = obj;
-                        }
-                    }
-                    sdr.Close();
-                    return 0;
-                }
-                else
-                {
-                    return sqlCmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e1)
-            {
-                MessageBox.Show(e1.Message); return -1;
-            }
-        }
-
-
-
-        public form1()
-        {
-            InitializeComponent();
-        }
-
-        
-        iniFile ini = new iniFile(".\\WorkOut.ini");
-
-
-        private void form1_Load(object sender, EventArgs e)
-        {
-            int x = int.Parse(ini.GetString("Position", "LocationX", "0"));
-            int y = int.Parse(ini.GetString("Position", "LocationY", "0"));
-            Location = new Point(x, y);
-
-            // csv 파일 불러오기
-            Encoding enc = Encoding.UTF8;
-            // StreamReader sr = new StreamReader(address, enc, true);     // 한번 다시 해 보기
-
-            byte[] bArrOrg = File.ReadAllBytes(address);
-            byte[] bArr = Encoding.Convert(enc, Encoding.Default, bArrOrg);     // Raw Data
-            string str = Encoding.Default.GetString(bArr);  // All Text
-            string[] sArr = str.Split('\n');
-
-            string[] sa1 = sArr[0].Trim().Split(',');
-            for (int i = 0; i < sa1.Length; i++) dbGrid.Columns.Add(sa1[i], sa1[i]);
-            for(int k=1;k<sArr.Length;k++)
-            {
-                sa1 = sArr[k].Trim().Split(',');
-                dbGrid.Rows.Add(sa1);
-            }
-            
-        }
-
-
-
-        SqlConnection sqlConn = new SqlConnection();    //Application Program과 DB를 연결시켜주는 도로 
-        SqlCommand sqlCmd = new SqlCommand();           //그 도로를 타고 가는 자동차
-        
-        
-        // sql 주소(각자 다름)
-        string ConnString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\KOSTA\Desktop\WorkOut1-master\myDatabase.mdf;Integrated Security=True;Connect Timeout=30";
-
-        /// <summary>
-        /// 저장할 주소/workoutprogram.csv 파일
-        /// </summary>
-        
-        string address = "C:\\Users\\KOSTA\\Desktop\\WorkOut1-master\\workoutprogram.csv";
 
         string SetText = "";
 
-        
-
-        /// <summary>
-        /// 운동 종류 // 변경한 부분 : try ~ catch
-        /// // x를 클릭하면 운동족목을 재설정하시겠습니까?라는 문구와 함께 버튼 YES.NO
-        /// Yes 선택 -> frmstart로 돌아감
-        /// No 선택 -> 다시 frminfo 열어줌
-        /// </summary>
         private void MnuSohp_Click(object sender, EventArgs e)
         {
             SetText = calculation(MnuSohp.Text);
         }
         private void MnuSarere_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuSarere.Text);
+            SetText =  calculation(MnuSarere.Text);
         }
+
         private void MnuRearDelt_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuRearDelt.Text);
+            SetText =  calculation(MnuRearDelt.Text);
         }
+
         private void MnuOhp_Click(object sender, EventArgs e)
         {
             SetText = calculation(MnuOhp.Text);
         }
+
         private void MnuSquat_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuSquat.Text);
+            SetText =  calculation(MnuSquat.Text);
         }
+
         private void MnuLegExtention_Click(object sender, EventArgs e)
         {
-
-            SetText = calculation(MnuLegExtention.Text);
-
+            SetText =  calculation(MnuLegExtention.Text);
         }
+
         private void MnuLegCurl_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuLegCurl.Text);
+            SetText =  calculation(MnuLegCurl.Text);
         }
         private void MnuDumbelCurl_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuDumbelCurl.Text);
+            SetText =  calculation(MnuDumbelCurl.Text);
         }
+
         private void MnuBarbelCurl_Click(object sender, EventArgs e)
         {
-            SetText = calculation(MnuBarbelCurl.Text);
+            SetText =  calculation(MnuBarbelCurl.Text);
         }
         private void MnuBenchpress_Click(object sender, EventArgs e)
         {
@@ -295,57 +238,94 @@ namespace WorkOut
 
 
 
+        private void form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ini.WriteString("Position", "LocationX", $"{Location.X}");
+            ini.WriteString("Position", "LocationY", $"{Location.Y}");
+
+            File.AppendAllText(address, SetText,Encoding.UTF8);
+        }
+
+
+
+
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             //btnOk.DialogResult = DialogResult.OK;
         }
-
-
         private void bicepsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            ini.WriteString("Position", "LocationX", $"{Location.X}");
-            ini.WriteString("Position", "LocationY", $"{Location.Y}");
-            File.AppendAllText(address, SetText, Encoding.UTF8);
-        }
+            dbGrid.Rows.Clear();
+            //dbGrid.Columns.Clear();
 
-        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            DateTime dt1 = DateTimePicker1.Value;
-            string dateStr = dt1.ToString("yyyy.MM.dd");
+            string day = dateTimePicker1.Value.ToString("yyyy.MM.dd");
 
-            Encoding ec = Encoding.UTF8;
+            Encoding ec =  Encoding.UTF8 ;
             StreamReader sr = new StreamReader(address, ec, true);
 
-            while(true)
+            //string str = "";
+            //string[] sarr = str.Split(',');
+            //for (int i = 0; i < sarr.Length; i++)
+            //{
+            //    dbGrid.Columns.Add(sarr[i], sarr[i]);
+            //}
+
+            while (true)
             {
-                string str = sr.ReadLine();     // 한줄 씩 읽어온다.
-                if (str == null) break;         // 읽을 것이 없다면 break
+                string str = sr.ReadLine();
+                if (str == null) break;
                 string[] sarr = str.Split(',');
 
-                for (int i=0;i<sarr.Length;i++)
+                
+                for (int i = 0; i < sarr.Length; i++)
                 {
-                    if(sarr[i] == dateStr)
+                    if (sarr[i]==day)
                     {
-                        int indx = dbGrid.Rows.Add();       
+                        int indx = dbGrid.Rows.Add();
                         for (int j=0;j<sarr.Length;j++)
                         {
                             dbGrid.Rows[indx].Cells[j].Value = sarr[j];
                         }
                     }
+                    
                 }
             }
             sr.Close();
+            //if(str==null)
+            //{
+            //    Encoding enc;
+            //    enc = Encoding.UTF8;
+
+            //    byte[] barrOrg = File.ReadAllBytes(address);
+            //    byte[] barr = Encoding.Convert(enc, Encoding.Default, barrOrg);
+            //    str = Encoding.Default.GetString(barr);
+
+            //    sarr = str.Split('\n');                //줄 별로 array만듬
+            //    string[] sa1 = sarr[0].Trim().Split(',');       //줄 안에서 ,단위로 나눔
+
+            //    //for (int i = 0; i < sa1.Length; i++)
+            //    //{
+            //    //    dbGrid.Columns.Add(sa1[i], sa1[i]);
+            //    //}
+            //    for (int j = 1; j < sarr.Length; j++)
+            //    {
+            //        sa1 = sarr[j].Trim().Split(',');
+            //        dbGrid.Rows.Add(sa1);
+            //    }
+
+            //}
+
 
 
 
 
         }
-
 
     }
 }

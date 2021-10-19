@@ -29,18 +29,22 @@ namespace WorkOut
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHeader));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dbGrid = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ClientList = new System.Windows.Forms.ToolStripDropDownButton();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pmnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -68,6 +72,7 @@ namespace WorkOut
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dbGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dbGrid.ContextMenuStrip = this.contextMenuStrip1;
             this.dbGrid.Location = new System.Drawing.Point(0, 0);
             this.dbGrid.Name = "dbGrid";
             this.dbGrid.RowTemplate.Height = 23;
@@ -104,6 +109,20 @@ namespace WorkOut
             this.ClientList.Size = new System.Drawing.Size(69, 20);
             this.ClientList.Text = "ClientList";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pmnuConnect});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(120, 26);
+            // 
+            // pmnuConnect
+            // 
+            this.pmnuConnect.Name = "pmnuConnect";
+            this.pmnuConnect.Size = new System.Drawing.Size(180, 22);
+            this.pmnuConnect.Text = "Connect";
+            this.pmnuConnect.Click += new System.EventHandler(this.pmnuConnect_Click);
+            // 
             // frmHeader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -112,6 +131,7 @@ namespace WorkOut
             this.Controls.Add(this.splitContainer1);
             this.Name = "frmHeader";
             this.Text = "WorkOut";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmHeader_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -120,6 +140,7 @@ namespace WorkOut
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -131,5 +152,7 @@ namespace WorkOut
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripDropDownButton ClientList;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem pmnuConnect;
     }
 }
