@@ -50,11 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmStart.cs">
+    <Compile Include="frmHeader.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStart.Designer.cs">
-      <DependentUpon>frmStart.cs</DependentUpon>
+    <Compile Include="frmHeader.Designer.cs">
+      <DependentUpon>frmHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClient.Designer.cs">
+      <DependentUpon>frmClient.cs</DependentUpon>
     </Compile>
     <Compile Include="frmInfo.cs">
       <SubType>Form</SubType>
@@ -76,8 +82,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmStart.resx">
-      <DependentUpon>frmStart.cs</DependentUpon>
+    <EmbeddedResource Include="frmHeader.resx">
+      <DependentUpon>frmHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClient.resx">
+      <DependentUpon>frmClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInfo.resx">
       <DependentUpon>frmInfo.cs</DependentUpon>

@@ -66,6 +66,7 @@
             this.dbGrid = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.tbChat = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -340,6 +341,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.tbChat);
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
             this.splitContainer1.Size = new System.Drawing.Size(652, 464);
             this.splitContainer1.SplitterDistance = 266;
@@ -391,7 +393,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(649, 178);
+            this.textBox1.Size = new System.Drawing.Size(417, 185);
             this.textBox1.TabIndex = 1;
             // 
             // DateTimePicker1
@@ -401,6 +403,18 @@
             this.DateTimePicker1.Size = new System.Drawing.Size(217, 21);
             this.DateTimePicker1.TabIndex = 5;
             this.DateTimePicker1.ValueChanged += new System.EventHandler(this.DateTimePicker1_ValueChanged);
+            // 
+            // tbChat
+            // 
+            this.tbChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbChat.Location = new System.Drawing.Point(419, 2);
+            this.tbChat.Multiline = true;
+            this.tbChat.Name = "tbChat";
+            this.tbChat.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbChat.Size = new System.Drawing.Size(229, 185);
+            this.tbChat.TabIndex = 2;
             // 
             // form1
             // 
@@ -465,6 +479,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DateTimePicker DateTimePicker1;
         private System.Windows.Forms.DataGridView dbGrid;
+        private System.Windows.Forms.TextBox tbChat;
     }
 }
 
