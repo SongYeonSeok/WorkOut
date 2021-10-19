@@ -33,8 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="myLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="myLibrary">
       <HintPath>..\..\myLibrary\myLibrary\bin\Debug\myLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -50,11 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmStart.cs">
+    <Compile Include="frmClient.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStart.Designer.cs">
-      <DependentUpon>frmStart.cs</DependentUpon>
+    <Compile Include="frmClient.Designer.cs">
+      <DependentUpon>frmClient.cs</DependentUpon>
     </Compile>
     <Compile Include="frmInfo.cs">
       <SubType>Form</SubType>
@@ -74,10 +73,11 @@
     <Compile Include="frmLogIn.Designer.cs">
       <DependentUpon>frmLogIn.cs</DependentUpon>
     </Compile>
+    <Compile Include="library.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmStart.resx">
-      <DependentUpon>frmStart.cs</DependentUpon>
+    <EmbeddedResource Include="frmClient.resx">
+      <DependentUpon>frmClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInfo.resx">
       <DependentUpon>frmInfo.cs</DependentUpon>
@@ -109,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

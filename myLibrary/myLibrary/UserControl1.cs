@@ -202,6 +202,11 @@ namespace myLibrary
 
         }
 
+        public void Close()
+        {
+            cmd.Dispose();
+            conn.Close();
+        }
         public string GetString(string sql)     // 단일 데이터 (1st record  1st field)
         {       //select name from users where name = "Noname"
             try

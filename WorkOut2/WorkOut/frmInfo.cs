@@ -36,14 +36,20 @@ namespace WorkOut
 
         private void btnoutput_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-        private void btninput_Click(object sender, EventArgs e)
-        {
-            TbBox1.Visible = true;
-            TbBox2.Visible = true;
 
+
+
+
+        /// <summary>
+        /// 원래는 입력버튼을 클릭하면 날짜가 뜨게했는데 
+        /// Load되면 날짜가 뜨도록 함
+        /// 날짜와 요일의 textbox는 Enabled처리함
+        /// </summary>
+        private void frmInfo_Load(object sender, EventArgs e)
+        {
             // 현재의 요일표시
             DateTime datetime = DateTime.Now;
             if (datetime.DayOfWeek == DayOfWeek.Monday) tbBoxDoW.Text = "월요일";
@@ -57,7 +63,8 @@ namespace WorkOut
             // 현재의 날짜표시
             string s = DateTime.Now.ToString("yyyy.MM.dd");
             tbBoxDate.Text = s;
-
         }
+
+        
     }
 }

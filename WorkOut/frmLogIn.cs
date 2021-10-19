@@ -14,14 +14,10 @@ namespace WorkOut
     public partial class frmLogIn : Form
     {
         public frmLogIn()
-        {   
+        {
             InitializeComponent();
         }
-        /// <summary>
-        /// myLibraryURL : 각자의 mdf 파일 주소
-        /// </summary>
-        const string myLibraryURL = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\KOSTA\Desktop\WorkOut1-master\myDatabase.mdf;Integrated Security=True;Connect Timeout=30";
-        SqlDB sqldb = new SqlDB(myLibraryURL);
+        SqlDB sqldb = new SqlDB(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\조석훈\source\repos\C#\myDatabase.mdf;Integrated Security=True;Connect Timeout=30");
 
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -30,49 +26,18 @@ namespace WorkOut
 
             string ret = sqldb.GetString($"select name from WorkOutMem where name = '{name}'");
             string ret2 = sqldb.GetString($"select PW from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
-            string type = sqldb.GetString($"select Type from WorkOutMem where PW = '{pw}'and Name = '{name}' ");
 
             form1 f1 = new form1();
-            frmHeader fh = new frmHeader();
             
-            
+
             if (name==ret)
             {
-                if(type == "Header")
-                {
-                    ///
-                    // 로그인 할 때 로그인 후 로그인 창 사라지게 하기
-                    ///
-                    MessageBox.Show($"환영합니다 {name}님");
-                    this.Hide();        // 숨기기
-                    switch(fh.ShowDialog())
-                    {
-                        case DialogResult.OK:
-                            fh.Close();
-                            break;
-
-                        case DialogResult.Cancel:
-                            Dispose();
-                            break;
-                    }
-                }
-                else if (type == "Client")
+                if(pw==ret2)
                 {
                     MessageBox.Show($"환영합니다 {name}님");
-                    this.Hide();
-                    switch(f1.ShowDialog())
-                    {
-                        case DialogResult.OK:
-                            f1.Close();
-                            break;
-
-                        case DialogResult.Cancel:
-                            Dispose();
-                            break;
-                    }
+                    f1.ShowDialog();
+                    
                 }
-
-
                 else if(pw!=ret2)
                 {
                     MessageBox.Show("잘못된 PW입니다.");
@@ -86,11 +51,6 @@ namespace WorkOut
             }
 
 
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

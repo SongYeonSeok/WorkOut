@@ -25,8 +25,6 @@ namespace WorkOut
             InitializeComponent();
         }
 
-
-
         
         iniFile ini = new iniFile(".\\WorkOut.ini");
 
@@ -160,27 +158,22 @@ namespace WorkOut
         {
             SetText =  calculation(MnuSarere.Text);
         }
-
         private void MnuRearDelt_Click(object sender, EventArgs e)
         {
             SetText =  calculation(MnuRearDelt.Text);
         }
-
         private void MnuOhp_Click(object sender, EventArgs e)
         {
             SetText = calculation(MnuOhp.Text);
         }
-
         private void MnuSquat_Click(object sender, EventArgs e)
         {
             SetText =  calculation(MnuSquat.Text);
         }
-
         private void MnuLegExtention_Click(object sender, EventArgs e)
         {
             SetText =  calculation(MnuLegExtention.Text);
         }
-
         private void MnuLegCurl_Click(object sender, EventArgs e)
         {
             SetText =  calculation(MnuLegCurl.Text);
@@ -189,7 +182,6 @@ namespace WorkOut
         {
             SetText =  calculation(MnuDumbelCurl.Text);
         }
-
         private void MnuBarbelCurl_Click(object sender, EventArgs e)
         {
             SetText =  calculation(MnuBarbelCurl.Text);
@@ -375,9 +367,9 @@ namespace WorkOut
             }
         }
 
-        public string ConnectIP = "127.0.0.1";
-        public int ConnectPort = 9001;
-        public int serverPort = 9001;
+        string ConnectIP = "127.0.0.1";
+        int ConnectPort = 9001;
+        int serverPort = 9001;
 
         void InitServer()
         {
